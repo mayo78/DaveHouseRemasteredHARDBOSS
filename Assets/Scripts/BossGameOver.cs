@@ -15,7 +15,8 @@ public class BossGameOver : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-
+        
+        buttons.SetActive(true);
         gameOverClipIndex = Random.Range(0, gameOverClipsDaveCanSayLol.Length - 1);
         StartCoroutine(GameOverSequence());
     }
@@ -23,8 +24,8 @@ public class BossGameOver : MonoBehaviour
     {
         yield return new WaitForSeconds(1);
         sourceLmao.PlayOneShot(gameOverClipsDaveCanSayLol[gameOverClipIndex]);
-        yield return new WaitForSeconds(gameOverClipsDaveCanSayLol[gameOverClipIndex].length);
-        buttons.SetActive(true);
+        // yield return new WaitForSeconds(gameOverClipsDaveCanSayLol[gameOverClipIndex].length);
+        // buttons.SetActive(true);
     }
     public void ChangeScene(string scene)
     {

@@ -18,8 +18,10 @@ public class DaveBoss : MonoBehaviour
     public Slider healthBar;
 
     public string[] attacks;
-
+    
     public bool bossStarted, bossDefeated, bossDefeatStarted, stopMusic;
+    
+    // private List<GameObject> objects; //for lava attackk
     private void Update()
     {
         direction.transform.LookAt(player.transform);
@@ -39,15 +41,19 @@ public class DaveBoss : MonoBehaviour
             StartCoroutine(Defeated());
             bossDefeatStarted = true;
         }
+        if(!bossDefeated && Input.GetKeyDown(KeyCode.Y))
+        {
+          health = 0; //for debugging :)
+        }
     }
     public IEnumerator RepeatAttacks()
     {
         if(!bossDefeated)
         {
             bossStarted = true;
-            timesToThrow = Random.Range(3, 6);
-            timesToSpawnSpike = Random.Range(5, 7);
-            yield return new WaitForSeconds(Random.Range(4f, 7f));
+            timesToThrow = Random.Range(9, 13);
+            timesToSpawnSpike = Random.Range(9, 20);
+            yield return new WaitForSeconds(Random.Range(1, 2));
             int attackSelection = Random.Range(0, attacks.Length);
             Debug.Log($"Attack selected: {attacks[attackSelection]}");
             StartCoroutine(attacks[attackSelection]);
@@ -55,7 +61,7 @@ public class DaveBoss : MonoBehaviour
     }
     IEnumerator PyramidAttack()
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1);
         if(timesToThrow > 0)
         {
             StartCoroutine(ThrowPyramid());
@@ -68,7 +74,7 @@ public class DaveBoss : MonoBehaviour
     }
     IEnumerator SpikeAttack()
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1);
         if (timesToSpawnSpike > 0)
         {
             SpawnSpike();
@@ -78,11 +84,17 @@ public class DaveBoss : MonoBehaviour
             StartCoroutine(RepeatAttacks());
         }
     }
+    IEnumerator AllAttack() //funy
+    {
+      yield return new WaitForSeconds(1);
+      StartCoroutine(PyramidAttack());
+      StartCoroutine(SpikeAttack());
+    }
     IEnumerator ThrowPyramid()
     {
         timesToThrow--;
         daveSprite.sprite = preparingAttackPyramid;
-        yield return new WaitForSeconds(Random.Range(0.2f, 0.5f));
+        yield return new WaitForSeconds(Random.Range(0.2f, 0.3f));
         Instantiate(pyramid, direction.transform.position, direction.transform.rotation);
         daveAudio.PlayOneShot(throwSound);
         daveSprite.sprite = attacking;
@@ -100,8 +112,8 @@ public class DaveBoss : MonoBehaviour
         stopMusic = true;
         daveAudio.PlayOneShot(defeatedClip);
         daveSprite.sprite = defeated;
-        yield return new WaitForSeconds(8);
-        transform.DOMoveY(-45, 8);
+        yield return new WaitForSeconds(4);
+        transform.DOMoveY(-45, 4);
         yield return new WaitForSeconds(5);
         gameObject.SetActive(false);
     }
@@ -109,7 +121,7 @@ public class DaveBoss : MonoBehaviour
     {
         if(other.CompareTag("LaserShot") && bossStarted)
         {
-            health -= Random.Range(1f, 3f);
+            health -= Random.Range(1f, 1.5f);
             Destroy(other);
         }
     }

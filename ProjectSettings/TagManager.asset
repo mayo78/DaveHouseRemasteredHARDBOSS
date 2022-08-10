@@ -19,6 +19,9 @@ TagManager:
   - DaveTwo
   - Lava
   - DVDPlayer
+  - LavaAttack
+  - StupidLeft
+  - StupidRight
   layers:
   - Default
   - TransparentFX

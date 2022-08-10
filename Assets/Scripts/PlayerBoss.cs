@@ -28,6 +28,8 @@ public class PlayerBoss : MonoBehaviour
     public Collider exitThree;
 
     public GameObject postProcessingHandler;
+    
+    bool isShooting; // making it so the blaster acts like a machine gun :)
 
     private void Start()
     {
@@ -44,13 +46,8 @@ public class PlayerBoss : MonoBehaviour
     {
         healthBar.value = health;
         ammoText.text = $"Ammo: {ammo}";
-
-        if(Input.GetMouseButtonDown(0) && boss.bossStarted && ammo > 0 && !reloading)
-        {
-            Instantiate(blasterBullet, cam.position, cam.rotation);
-            audioSource.PlayOneShot(fire);
-            ammo--;
-        }
+        
+        isShooting = Input.GetMouseButton(0);
         if(Input.GetKeyDown(KeyCode.R) && !reloading && boss.bossStarted)
         {
             StartCoroutine(Reload());
@@ -58,6 +55,16 @@ public class PlayerBoss : MonoBehaviour
         if(health <= 0)
         {
             SceneManager.LoadScene("BossGameOver");
+        }
+        if(boss.bossStarted && isShooting && ammo > 0 && !reloading)
+        {
+          Instantiate(blasterBullet, cam.position, cam.rotation);
+          audioSource.PlayOneShot(fire);
+          ammo--;
+        }
+        if(ammo > 0)
+        {
+          isShooting = false;
         }
     }
     private void OnTriggerEnter(Collider other)
@@ -69,13 +76,13 @@ public class PlayerBoss : MonoBehaviour
         }
         if(other.CompareTag("Spike"))
         {
-            health -= 20;
+            health -= 30;
         }
         if(other.CompareTag("DaveTwo") && !other.GetComponent<DavePhaseTwo>().bossDefeated)
         {
             health = 0;
         }
-        if(other.CompareTag("Lava"))
+        if(other.CompareTag("Lava") || other.CompareTag("LavaAttack"))
         {
             health = 0;
         }

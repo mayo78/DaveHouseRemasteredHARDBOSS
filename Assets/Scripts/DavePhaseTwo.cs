@@ -26,7 +26,7 @@ public class DavePhaseTwo : MonoBehaviour
         if(!bossDefeated)
         {
             Vector3 position = transform.position;
-            position.x += 2.5f * Time.deltaTime;
+            position.x += 3.5f * Time.deltaTime;
             transform.position = position;
         }
 
@@ -43,6 +43,10 @@ public class DavePhaseTwo : MonoBehaviour
         if(fadeMusic)
         {
             music.volume -= 0.25f * Time.deltaTime;
+        }
+        if(!bossDefeated && Input.GetKeyDown(KeyCode.U))
+        {
+          health = 0; //for debugging :)
         }
     }
     private void OnTriggerEnter(Collider other)

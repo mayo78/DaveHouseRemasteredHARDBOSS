@@ -38,13 +38,9 @@ public class BossIntroSequence : MonoBehaviour
             stopAmbience = true;
             yield return new WaitForSeconds(5);
             stopAmbience = false;
-            daveTalk.PlayOneShot(daveIntro);
-            yield return new WaitForSeconds(37);
             daveTalk.PlayOneShot(weirdCreepySlide);
             daveThing.DOMoveY(0, 6.85f);
             yield return new WaitForSeconds(9);
-            daveTalk.PlayOneShot(ready);
-            yield return new WaitForSeconds(5);
             bossMusic.Play();
             healthBars.SetActive(true);
             StartCoroutine(boss.RepeatAttacks());
