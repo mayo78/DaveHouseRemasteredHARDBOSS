@@ -41,10 +41,10 @@ public class DaveBoss : MonoBehaviour
             StartCoroutine(Defeated());
             bossDefeatStarted = true;
         }
-        if(!bossDefeated && Input.GetKeyDown(KeyCode.Y))
-        {
-          health = 0; //for debugging :)
-        }
+        // if(!bossDefeated && Input.GetKeyDown(KeyCode.Y))
+        // {
+        //   health = 0; //for debugging :)
+        // }
     }
     public IEnumerator RepeatAttacks()
     {

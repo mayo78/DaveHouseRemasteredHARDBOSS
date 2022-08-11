@@ -44,10 +44,10 @@ public class DavePhaseTwo : MonoBehaviour
         {
             music.volume -= 0.25f * Time.deltaTime;
         }
-        if(!bossDefeated && Input.GetKeyDown(KeyCode.U))
-        {
-          health = 0; //for debugging :)
-        }
+        // if(!bossDefeated && Input.GetKeyDown(KeyCode.U))
+        // {
+        //   health = 0; //for debugging :)
+        // }
     }
     private void OnTriggerEnter(Collider other)
     {
